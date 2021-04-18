@@ -1,0 +1,61 @@
+import { IContext } from './interfaces/context.interface';
+import { GraphQLSchema } from 'graphql';
+import express from 'express';
+import cors from 'cors';
+import compression from 'compression';
+import { createServer } from 'http';
+import  enviroments from './config/enviroments';
+import { ApolloServer } from 'apollo-server-express';
+import schema from './schema';
+import expressPlayGround from 'graphql-playground-middleware-express';
+import Database from './lib/databases';
+
+// Configuración de ariables de entorno
+if (process.env.NODE_ENV !== 'production') {
+    const env = enviroments;
+    console.log(env);
+}
+
+async function init() {
+    const app = express();
+    const corsFn = cors();
+
+    app.use('*', corsFn);
+    app.use(compression());
+
+    const database = new Database();
+
+    const db = await database.init();
+
+    const context = async( {req, connection}: IContext ) => {
+        const token = (req)? req.headers.authorization : connection.authorization;
+        return { db, token };
+    }
+
+    const server = new ApolloServer({
+        schema,
+        introspection: true,
+        context
+    });
+
+    server.applyMiddleware({app});
+
+    /*app.get('/', (req, res)=>{
+        res.send('HOLA MUNDO');
+    });*/
+
+    app.get('/', expressPlayGround({
+        endpoint: '/graphql'
+    }));
+
+    const PORT = process.env.PORT || 2002;
+    const httpServer = createServer(app);
+
+    httpServer.listen({
+        port: PORT
+    },
+    () => console.log(`http://localhost:${PORT} API GRAPHQL`));
+
+}
+
+init();

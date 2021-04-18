@@ -1,0 +1,82 @@
+"Definiciones de los tipos de raíz"
+type Query{
+    "Lista de usuarios en la base de datos"
+    users: ResultUsers
+    "Para iniciar sesion de usuario"
+    login(email: String!, password: String!): ResultLogin
+    "Autenticarnos mediante token"
+    me: ResultUser
+}
+
+type Mutation {
+    register(user: UserInput!): ResultUser
+}
+
+"""
+Vamos a especificar la informacion de usuario
+vamos a tener en cuenta el email como usuario
+fecha de nacimiento y registro en formato ISO
+"""
+type User {
+    id: ID!
+    name: String!
+    lastname: String!
+    email: String!
+    password: String!
+    registerDate: String!
+    birthday: String!
+    "Rol de usuario"
+    role: Role!
+}
+
+input UserInput{
+    id: ID
+    name: String!
+    lastname: String!
+    email: String!
+    password: String!
+    birthday: String!
+    "Rol de usuario"
+    role: Role=CLIENT
+}
+
+enum Role {
+    CLIENT
+    ADMIN
+}
+
+"""Interface para especificar las propiedades obligatorias en la respuesta"""
+interface Result {
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+}
+
+type ResultUsers implements Result{
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+    "Lista de usuarios"
+    users:[User!]!
+}
+
+type ResultUser implements Result{
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+    "Usuario"
+    user: User
+}
+
+
+type ResultLogin implements Result{
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+    "Información del token usuario logueado"
+    token: String
+}
