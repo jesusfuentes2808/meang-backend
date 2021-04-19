@@ -1,23 +1,24 @@
-import { COLLECTIONS, EXPIRTIME, MESSAGES } from './../config/constants';
+import { findOneElement, findElements } from './../../lib/lib-operations';
+import { COLLECTIONS, EXPIRTIME, MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
-import JWT from '../lib/jwt';
+import JWT from './../../lib/jwt';
 import bcrypt from 'bcrypt';
 
-const resolversQuery: IResolvers = {
+const resolversUserQuery: IResolvers = {
     Query: {
         async users(root, __, { db }) {
             try{
                 return {
                     status: true,
                     message: 'Lista de usuarios cargada correctamente',
-                    users: await db.collection(COLLECTIONS.USERS).find().toArray()
+                    users: await findElements(db, COLLECTIONS.USERS)
                 };
             }catch(error){
                 console.log(error.message);
                 return {
                     status: false,
                     message: 'Error al cargar lista de usuarios. Comprueba que tienes correctamente todo',
-                    users: await db.collection(COLLECTIONS.USERS).find().toArray()
+                    users: null
                 };
             }
             
@@ -25,9 +26,8 @@ const resolversQuery: IResolvers = {
 
         async login(_, { email, password }, { db }) {
             try{
-                const user = await db.collection(COLLECTIONS.USERS)
-                                .findOne({email});
-
+                const user = await findOneElement(db, COLLECTIONS.USERS, { email });
+                
                 if(user === null){
                     return {
                         status: false,
@@ -85,4 +85,4 @@ const resolversQuery: IResolvers = {
     }
 };
 
-export default resolversQuery;
+export default resolversUserQuery;

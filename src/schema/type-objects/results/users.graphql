@@ -1,0 +1,8 @@
+type ResultUsers implements Result{
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+    "Lista de usuarios"
+    users:[User!]!
+}

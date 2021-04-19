@@ -1,0 +1,7 @@
+"""Interface para especificar las propiedades obligatorias en la respuesta"""
+interface Result {
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+}

@@ -1,0 +1,16 @@
+"""
+Vamos a especificar la informacion de usuario
+vamos a tener en cuenta el email como usuario
+fecha de nacimiento y registro en formato ISO
+"""
+type User {
+    id: ID!
+    name: String!
+    lastname: String!
+    email: String!
+    password: String!
+    registerDate: String!
+    birthday: String!
+    "Rol de usuario"
+    role: Role!
+}
