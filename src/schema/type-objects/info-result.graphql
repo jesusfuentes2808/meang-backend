@@ -1,0 +1,10 @@
+type ResultInfo{
+    "Pagina seleccionada"
+    page: Int!
+    "Numero total de documentos"
+    total: Int!
+    "Numero de elementos por página"
+    itemsPage: Int!
+    "Página que contiene el resultado"
+    pages: Int!
+}
