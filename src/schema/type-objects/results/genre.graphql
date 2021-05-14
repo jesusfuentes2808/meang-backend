@@ -1,0 +1,9 @@
+type ResultGenre implements Result{
+    "Estado de la opreación"
+    status: Boolean!
+    "Mensaje de la opreación"
+    message: String!
+    "Usuario"
+    genre: Genre
+    genres: [Genre!]
+}

@@ -7,7 +7,8 @@ if(process.env.NODE_ENV !== 'production'){
 export const SECRET_KEY = process.env.SECRET_KEY || 'JesusFuentesGRAPHQL';
 
 export enum COLLECTIONS{
-    USERS='users'
+    USERS='users',
+    GENRES='genres'
 }
 
 export enum MESSAGES{

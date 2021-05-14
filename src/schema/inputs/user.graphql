@@ -3,7 +3,7 @@ input UserInput{
     name: String!
     lastname: String!
     email: String!
-    password: String!
+    password: String
     birthday: String!
     "Rol de usuario"
     role: Role=CLIENT

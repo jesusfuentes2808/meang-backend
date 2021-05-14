@@ -17,11 +17,10 @@ export const asignDocumentId = async(
                             limit(1).
                             sort(sort).
                             toArray();
-
     if(lastElemet.length === 0){
-        return 1;
+        return '1';
     } else {
-        return lastElemet[0].id + 1;
+        return String(+lastElemet[0].id + 1);
     }
 };
 
@@ -53,6 +52,19 @@ export const insertManyElements = async(
                     insertMany(document);
 };
 
+export const updateOneElement = async(
+    database: Db,
+    collection: string,
+    filter: object,
+    objectUpdate: object
+) => {
+    return await database.collection(collection).
+                                            updateOne(
+                                                filter,
+                                                {$set: objectUpdate}
+                                            );
+};
+
 export const findElements = async(
     database: Db,
     collection: string,
@@ -61,3 +73,13 @@ export const findElements = async(
     return await database.collection(collection).
                     find(filter).toArray();
 };
+
+
+export const deleteOneElement = async(
+    database: Db,
+    collection: string,
+    filter: object = {}
+) => {
+    return await database.collection(collection).deleteOne(filter);
+};
+

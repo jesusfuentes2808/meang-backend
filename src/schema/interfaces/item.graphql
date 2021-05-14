@@ -1,0 +1,7 @@
+"""Ietm básico para definir propiedades de elementos de la API de Rawg"""
+interface Item {
+    id: ID!
+    name: String!
+    slug: String!
+}
+

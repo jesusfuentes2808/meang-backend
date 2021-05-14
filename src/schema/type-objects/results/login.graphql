@@ -4,5 +4,7 @@ type ResultLogin implements Result{
     "Mensaje de la opreación"
     message: String!
     "Información del token usuario logueado"
-    token: String
+    token: String,
+    "Información del usuario"
+    user: User,
 }
