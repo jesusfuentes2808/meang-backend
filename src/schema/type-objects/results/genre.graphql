@@ -1,4 +1,5 @@
 type ResultGenre implements Result{
+    info: ResultInfo!
     "Estado de la opreación"
     status: Boolean!
     "Mensaje de la opreación"

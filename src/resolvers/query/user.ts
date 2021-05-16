@@ -7,8 +7,8 @@ import UsersService from "../../services/users.service";
 
 const resolversUserQuery: IResolvers = {
     Query: {
-        async users(root, __, context) {
-            return new UsersService(root, __, context).items();
+        async users(root, {page, itemsPage}, context) {
+            return new UsersService(root, {pagination: {page, itemsPage}}, context).items();
         },
 
         async login(_, { email, password }, context) {

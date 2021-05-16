@@ -1,7 +1,7 @@
 "Definiciones de los tipos de raíz"
 type Query{
     "Lista de usuarios en la base de datos"
-    users: ResultUsers
+    users(page: Int = 1, itemsPage: Int = 20): ResultUsers
     "Para iniciar sesion de usuario"
     login(email: String!, password: String!): ResultLogin
     "Autenticarnos mediante token"
@@ -9,7 +9,7 @@ type Query{
     """Mostrar lista de productos"""
     products: Boolean
     """Mostrar lista de géneros"""
-    genres: ResultGenre
+    genres(page: Int = 1, itemsPage: Int = 20): ResultGenre
 
     genre(id: ID!): ResultGenre
 }
