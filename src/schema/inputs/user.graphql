@@ -7,4 +7,5 @@ input UserInput{
     birthday: String!
     "Rol de usuario"
     role: Role=CLIENT
+    active: Boolean
 }

@@ -36,10 +36,22 @@ class ResolversOperationsService{
     }
 
     // Listar información
-    protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 20){
+    protected async list(
+        collection: string,
+        listElement: string,
+        page: number = 1,
+        itemsPage: number = 20,
+        filter: object = { active: { $ne: false} }
+    ){
         try {
             console.log(page, itemsPage);
-            const paginationData: IPaginationOptions = await pagination(this.getDB(), collection, page, itemsPage);
+            const paginationData: IPaginationOptions = await pagination(
+                this.getDB(),
+                collection,
+                page,
+                itemsPage,
+                filter
+                );
 
             return{
                 info: {
@@ -50,7 +62,7 @@ class ResolversOperationsService{
                 },
                 status: true,
                 message: `Lista de ${listElement} correctamente cargada`,
-                items: await findElements(this.getDB(), collection, {}, paginationData)
+                items: await findElements(this.getDB(), collection, filter, paginationData)
             };
 
         }catch (error){

@@ -3,6 +3,7 @@ import { COLLECTIONS } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import bcrypt from 'bcrypt';
 import UsersService from "../../services/users.service";
+import GenresService from "../../services/genres.service";
 
 const resolversUserMutation: IResolvers = {
     Mutation: {
@@ -18,6 +19,10 @@ const resolversUserMutation: IResolvers = {
 
         async deleteUser(_, { id }, context){
             return new UsersService(_, {id}, context).delete();
+        },
+
+        blockUser(_, { id }, context){
+            return  new UsersService(_,{ id }, context).block();
         }
     }
 };

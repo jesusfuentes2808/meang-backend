@@ -123,6 +123,24 @@ class GenresService extends ResolversOperationsService{
         };
     }
 
+    async  block(){
+        const id = this.getVariables().id;
+
+        if(!this.checkData(String(id) || '')){
+            return {
+                status: false,
+                message: 'El id del  género existe en la base de datos',
+            };
+        }
+
+        const result = await this.update(this.collection, {id}, {active: false}, 'genero');
+
+        return {
+            status: result.status,
+            message: (result.message) ? 'Bloqueado correctamente' : 'No se ha bloqueado comprobarlo por favor',
+        };
+    }
+
     private checkData(value: string): boolean{
         return (value === '' || value === undefined) ? false : true;
     }
