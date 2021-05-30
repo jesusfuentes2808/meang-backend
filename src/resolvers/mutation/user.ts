@@ -22,7 +22,7 @@ const resolversUserMutation: IResolvers = {
         },
 
         blockUser(_, { id }, context){
-            return  new UsersService(_,{ id }, context).block();
+            return  new UsersService(_,{ id }, context).unblock(false);
         }
     }
 };
