@@ -1,5 +1,5 @@
 import ResolversOperationsService from "./resolvers-operations.service";
-import {COLLECTIONS, EXPIRTIME, MESSAGES} from "../config/constants";
+import {ACTIVE_VALUES_FILTER, COLLECTIONS, EXPIRTIME, MESSAGES} from "../config/constants";
 import {IContextData} from "../interfaces/context-data.interface";
 import {asignDocumentId, findOneElement, insertOneElement} from "../lib/lib-operations";
 import bcrypt from "bcrypt";
@@ -15,10 +15,20 @@ class UsersService extends ResolversOperationsService {
     }
 
     //Lista de Usuarios
-    async items(){
+    async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE){
+        let filter: object = { active: {$ne: false}};
+
+        if(active === ACTIVE_VALUES_FILTER.ALL){
+            filter = {};
+        } else if (active === ACTIVE_VALUES_FILTER.INACTIVE){
+            filter = { active: false};
+        } else if (active === ACTIVE_VALUES_FILTER.ACTIVE){
+            filter = { active: true};
+        }
+
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
-        const result = await this.list(this.collection, 'usuarios', page, itemsPage);
+        const result = await this.list(this.collection, 'usuarios', page, itemsPage, filter);
         return {
             status: result.status,
             message: result.message,
@@ -184,7 +194,7 @@ class UsersService extends ResolversOperationsService {
         };
     }
 
-    async unblock(unblock: boolean = false){
+    async unblock(unblock: boolean = false, admin: boolean = false){
         const id = this.getVariables().id;
         const user = this.getVariables().user;
 
@@ -203,7 +213,7 @@ class UsersService extends ResolversOperationsService {
         }
 
         let update = {active: unblock};
-        if (unblock){
+        if (unblock && !admin){
             update = Object.assign({},
                 {active: true},
                 {
