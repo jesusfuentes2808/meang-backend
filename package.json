@@ -1,6 +1,6 @@
 {
   "name": "meang-backend",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Proyecto Backend API GraphQL MEAN+G",
   "main": "build/server.js",
   "scripts": {
