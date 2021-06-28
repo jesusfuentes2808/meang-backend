@@ -1,0 +1,25 @@
+type Query {
+    """Mostrar lista de géneros"""
+    shopProducts(
+        page: Int = 1,
+        itemsPage: Int = 20,
+        active: ActiveFilterEnum = ACTIVE
+    ): ResultShopProduct
+
+    shopProductsPlatforms(
+        page: Int = 1,
+        itemsPage: Int = 20,
+        active: ActiveFilterEnum = ACTIVE,
+        platform: ID!,
+        random: Boolean = false
+    ): ResultShopProduct
+
+    shopProductsOfferLast(
+        page: Int = 1,
+        itemsPage: Int = 20,
+        active: ActiveFilterEnum = ACTIVE,
+        topPrice: Float = -1,
+        lastUnits: Int = -1,
+        random: Boolean = false
+    ): ResultShopProduct
+}

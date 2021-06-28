@@ -44,7 +44,6 @@ class ResolversOperationsService{
         filter: object = { active: { $ne: false} }
     ){
         try {
-            console.log(page, itemsPage);
             const paginationData: IPaginationOptions = await pagination(
                 this.getDB(),
                 collection,
@@ -78,8 +77,7 @@ class ResolversOperationsService{
     protected async get(collection: string){
         try {
                 const collectionLabel = collection.toLowerCase();
-                return await findOneElement(this.getDB(), collection, {
-                                                                                id: this.variables.id}
+                return await findOneElement(this.getDB(), collection, {id: this.variables.id}
                 ).then(
                     (result) => {
 

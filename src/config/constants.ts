@@ -8,7 +8,10 @@ export const SECRET_KEY = process.env.SECRET_KEY || 'JesusFuentesGRAPHQL';
 
 export enum COLLECTIONS{
     USERS='users',
-    GENRES='genres'
+    GENRES='genres',
+    SHOP_PRODUCT = 'products_platforms',
+    PRODUCTS = 'products',
+    PLATFORMS = 'platforms',
 }
 
 export enum MESSAGES{
