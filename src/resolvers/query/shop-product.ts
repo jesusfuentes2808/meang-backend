@@ -35,7 +35,7 @@ const resolversShopProductQuery: IResolvers = {
             }
 
             return new ShopProductService(_, {pagination: {page, itemsPage}, active}, context)
-                .items(active, '', random, otherFilters);
+                .items(active, ['-1'], random, otherFilters);
         },
     }
 };

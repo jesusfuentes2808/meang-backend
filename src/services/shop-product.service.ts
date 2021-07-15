@@ -11,7 +11,7 @@ class  ShopProductService extends ResolversOperationsService{
     }
 
     async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE,
-                platform: string = '',
+                platform: Array<string>= ['-1'],
                 random: boolean = false,
                 otherFilters: object = {}
                 )
@@ -24,8 +24,8 @@ class  ShopProductService extends ResolversOperationsService{
             filter = {active: false};
         }
 
-        if(platform !== '' && platform !== undefined){
-            filter = { ...filter, ...{platform_id: platform} };
+        if(platform[0] !== '-1' && platform !== undefined){
+            filter = { ...filter, ...{platform_id: {$in: platform}} };
         }
 
         if(otherFilters !== {} && otherFilters !== undefined){
@@ -35,6 +35,7 @@ class  ShopProductService extends ResolversOperationsService{
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
 
+
         if(!random){
             const result = await this.list(
                 this.collection,
@@ -42,6 +43,7 @@ class  ShopProductService extends ResolversOperationsService{
                 page,
                 itemsPage,
                 filter);
+
             return{
                 info: result.info,
                 status: result.status,

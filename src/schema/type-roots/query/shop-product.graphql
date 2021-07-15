@@ -10,7 +10,7 @@ type Query {
         page: Int = 1,
         itemsPage: Int = 20,
         active: ActiveFilterEnum = ACTIVE,
-        platform: ID!,
+        platform: [ID!]!,
         random: Boolean = false
     ): ResultShopProduct
 
