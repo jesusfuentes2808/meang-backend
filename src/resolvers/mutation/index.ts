@@ -2,11 +2,13 @@ import GMR from 'graphql-merge-resolvers';
 import resolversUserMutation from './user';
 import resolversGenreMutation from "./genre";
 import resolversMailMutation from "./email";
+import mutationStripeResolvers from "./stripe";
 
 const mutationResolvers = GMR.merge([
     resolversUserMutation,
     resolversGenreMutation,
-    resolversMailMutation
+    resolversMailMutation,
+    mutationStripeResolvers
 ]);
 
 export default mutationResolvers;

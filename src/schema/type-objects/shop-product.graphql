@@ -6,4 +6,5 @@ type ShopProduct{
     platform: Platform
     price: Float!
     stock: Int!
+    relationalProducts: [ShopProduct]
 }

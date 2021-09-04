@@ -1,0 +1,14 @@
+type Query{
+
+    customers(
+        "Para limitar los resultados, de 1 a 100 (incluido)"
+        limit: Int = 5
+        startingAfter: ID = ""
+        endingBefore: ID = ""
+    ): ResultStripeCustomer
+
+    customer(
+        "Para limitar los resultados, de 1 a 100 (incluido)"
+        id: ID!
+    ): ResultStripeCustomer
+}

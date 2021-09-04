@@ -22,4 +22,6 @@ type Query {
         lastUnits: Int = -1,
         random: Boolean = false
     ): ResultShopProduct
+
+    shopProductDetails(id: Int!): ResultShopProduct
 }

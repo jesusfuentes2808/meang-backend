@@ -77,6 +77,16 @@ class  ShopProductService extends ResolversOperationsService{
         };
 
     }
+
+    async details(){
+        const result = await this.get(this.collection);
+
+        return {
+            status: result.status,
+            message: result.message,
+            shopProduct: result.item
+        };
+    }
 }
 
 export default ShopProductService;

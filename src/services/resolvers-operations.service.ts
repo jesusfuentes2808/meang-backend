@@ -75,6 +75,7 @@ class ResolversOperationsService{
 
     // Obtener detalles de item
     protected async get(collection: string){
+
         try {
                 const collectionLabel = collection.toLowerCase();
                 return await findOneElement(this.getDB(), collection, {id: this.variables.id}

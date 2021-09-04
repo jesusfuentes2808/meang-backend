@@ -1,6 +1,9 @@
 import { IResolvers } from 'graphql-tools';
 import ProductService from "../../services/product.service";
 import PlatformService from "../../services/platform.service";
+import {findElements} from "../../lib/lib-operations";
+import {COLLECTIONS} from "../../config/constants";
+
 
 const resolversShopProductType: IResolvers = {
     ShopProduct: {
@@ -24,6 +27,20 @@ const resolversShopProductType: IResolvers = {
                     {db}).details();
 
             return result.platform;
+        },
+        relationalProducts: async (parent, __, {db}) => {
+            const result =
+                await findElements(
+                    db,
+                    COLLECTIONS.SHOP_PRODUCT,
+                    {
+                        $and: [
+                            {product_id: parent.product_id},
+                            {id: {$ne: parent.id}}
+                        ]
+                    });
+
+            return result;
         }
     }
 };
