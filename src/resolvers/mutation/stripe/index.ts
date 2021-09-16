@@ -6,7 +6,8 @@ import resolversStripeChargeMutation from "./charge";
 const mutationStripeResolvers = GMR.merge([
     resolversStripeCustomerMutation,
     resolversStripeCardMutation,
-    resolversStripeChargeMutation
+    resolversStripeChargeMutation,
+
 ]);
 
 export default mutationStripeResolvers;

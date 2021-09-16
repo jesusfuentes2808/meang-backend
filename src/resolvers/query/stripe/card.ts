@@ -9,6 +9,7 @@ const resolversStripeCardQuery: IResolvers = {
         },
 
         async cards(_, {customer, limit, startingAfter, endingBefore}, {db}){
+            console.log(new StripeCardService().list(customer, limit, startingAfter, endingBefore));
             return new StripeCardService().list(customer, limit, startingAfter, endingBefore);
         },
 

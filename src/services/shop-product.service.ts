@@ -1,7 +1,8 @@
 import ResolversOperationsService from "./resolvers-operations.service";
 import {ACTIVE_VALUES_FILTER, COLLECTIONS} from "../config/constants";
 import {IContextData} from "../interfaces/context-data.interface";
-import {randomItems} from "../lib/lib-operations";
+import {manageStockUpdate, randomItems} from "../lib/lib-operations";
+import {IStock} from "../interfaces/stripe/stock.interface";
 
 class  ShopProductService extends ResolversOperationsService{
     collection = COLLECTIONS.SHOP_PRODUCT;
@@ -86,6 +87,25 @@ class  ShopProductService extends ResolversOperationsService{
             message: result.message,
             shopProduct: result.item
         };
+    }
+
+    async updateStock(updateList: Array<IStock>){
+        try {
+            updateList.map(async (item: IStock) => {
+                console.log(item);
+                await manageStockUpdate(
+                 this.getDB(),
+                 COLLECTIONS.SHOP_PRODUCT,
+                 {id: +item.id},
+                 {stock: item.increment}
+                );
+            });
+            return true;
+        }catch (e) {
+            console.log(e)
+            return false;
+        }
+
     }
 }
 

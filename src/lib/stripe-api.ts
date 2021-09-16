@@ -42,7 +42,7 @@ class StripeApi{
     protected getPagination(startingAfter: string, endingBefore: string){
         let pagination = {};
 
-        if(startingAfter !== '' && startingAfter === ''){
+        if(startingAfter !== '' && endingBefore === ''){
             pagination = {
                 starting_after: startingAfter
             };
@@ -51,7 +51,6 @@ class StripeApi{
                 ending_before: endingBefore
             };
         }
-
         return pagination;
     }
 }

@@ -5,11 +5,33 @@ import error = invariant.error;
 import {Trace} from "apollo-reporting-protobuf/dist/protobuf";
 import StripeCustomerService from "./customer.service";
 import StripeCardService from "./card.service";
+import {IStripeCustomer} from "../../interfaces/stripe/customer.interface";
+import {IStripeCharge} from "../../interfaces/stripe/charge.interface";
 
 class StripeChargeService extends StripeApi{
 
     private async getClient(customer: string){
         return new StripeCustomerService().get(customer);
+    }
+
+    async listByCustomer(customer: string, limit: number, startingAfter: string, endingBefore: string){
+        const pagination = this.getPagination(startingAfter, endingBefore);
+
+        return this.execute(
+            STRIPE_OBJECTS.CHARGES,
+            STRIPE_ACTIONS.LIST,
+            {
+                limit, customer,
+                ...pagination
+            }
+        ).then((result: { has_more: boolean, data: Array<IStripeCharge> })=>{
+            return{
+                status: true,
+                message: `Lista de pagos por clientes cargado correctamente`,
+                hasMore: result.has_more,
+                charges: result.data
+            };
+        }).catch((error: Error) => this.getError(error));
     }
 
     async order(payment: IPayment){
