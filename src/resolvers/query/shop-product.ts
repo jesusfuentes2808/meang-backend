@@ -1,7 +1,4 @@
-import {ACTIVE_VALUES_FILTER, COLLECTIONS, EXPIRTIME, MESSAGES} from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
-import JWT from './../../lib/jwt';
-import bcrypt from 'bcrypt';
 import ShopProductService from "../../services/shop-product.service";
 
 const resolversShopProductQuery: IResolvers = {

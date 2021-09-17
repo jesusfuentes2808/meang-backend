@@ -1,8 +1,9 @@
 import ResolversOperationsService from "./resolvers-operations.service";
-import {ACTIVE_VALUES_FILTER, COLLECTIONS} from "../config/constants";
+import {ACTIVE_VALUES_FILTER, COLLECTIONS, SUBSCRIPTIONS_EVENT} from "../config/constants";
 import {IContextData} from "../interfaces/context-data.interface";
-import {manageStockUpdate, randomItems} from "../lib/lib-operations";
+import {findOneElement, manageStockUpdate, randomItems} from "../lib/lib-operations";
 import {IStock} from "../interfaces/stripe/stock.interface";
+import {PubSub} from "apollo-server-express";
 
 class  ShopProductService extends ResolversOperationsService{
     collection = COLLECTIONS.SHOP_PRODUCT;
@@ -89,16 +90,36 @@ class  ShopProductService extends ResolversOperationsService{
         };
     }
 
-    async updateStock(updateList: Array<IStock>){
+    async updateStock(updateList: Array<IStock>, pubsub: PubSub){
         try {
             updateList.map(async (item: IStock) => {
-                console.log(item);
+                //REALTIME
+                const itemDetails = await findOneElement(
+                    this.getDB(),
+                    COLLECTIONS.SHOP_PRODUCT,
+                    {id: +item.id}
+                );
+
+                if(item.increment < 0 && (item.increment + itemDetails.stock < 0)){
+                    item.increment = -itemDetails.stock;
+                }
+
+                //REALTIME
+                itemDetails.stock += item.increment;
+
                 await manageStockUpdate(
                  this.getDB(),
                  COLLECTIONS.SHOP_PRODUCT,
                  {id: +item.id},
                  {stock: item.increment}
                 );
+
+                //REALTIME
+                itemDetails.stock += item.increment;
+                console.log(itemDetails);
+                pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT,
+                    { updateStockProduct: true });
+                console.log("PUBSUB");
             });
             return true;
         }catch (e) {

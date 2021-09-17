@@ -3,10 +3,9 @@ import ShopProductService from "../../services/shop-product.service";
 
 const resolversShopProductMutation: IResolvers = {
     Mutation: {
-        async updateStock(_, {update}, { db }){
-            console.log(update);
+        async updateStock(_, {update}, { db, pubsub }){
             return new ShopProductService(_, {}, {db})
-                .updateStock(update);
+                .updateStock(update, pubsub);
         },
     }
 };
