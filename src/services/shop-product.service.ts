@@ -116,10 +116,13 @@ class  ShopProductService extends ResolversOperationsService{
 
                 //REALTIME
                 itemDetails.stock += item.increment;
-                console.log(itemDetails);
+
+                /*pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT,
+                    { updateStockProduct: itemDetails });*/
+
                 pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT,
-                    { updateStockProduct: true });
-                console.log("PUBSUB");
+                    { selectProductStockUpdate: itemDetails });
+                console.log(pubsub);
             });
             return true;
         }catch (e) {

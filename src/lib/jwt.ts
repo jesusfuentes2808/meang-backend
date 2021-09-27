@@ -1,7 +1,7 @@
 import { IJwt } from './../interfaces/jwt.interface';
 import { SECRET_KEY, MESSAGES, EXPIRTIME } from './../config/constants';
 import jwt from 'jsonwebtoken';
-import { constants } from 'node:buffer';
+//import { constants } from 'node:buffer';
 
 class JWT {
     private secretKey = SECRET_KEY as string;
@@ -19,7 +19,7 @@ class JWT {
             return jwt.verify(token, this.secretKey);
         } catch (error) {
             return MESSAGES.TOKEN_VERIFICATION_FAILED;
-            console.log(error.message);
+            //console.log(error);
         }
     }
 }

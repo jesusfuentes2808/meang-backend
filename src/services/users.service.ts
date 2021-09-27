@@ -70,7 +70,7 @@ class UsersService extends ResolversOperationsService {
                     : user,
             };
         }catch(error){
-            console.log(error.message);
+            //console.log(error.message);
             return {
                 status: false,
                 message: 'Error al cargar lista de usuarios. Comprueba que tienes correctamente todo',
